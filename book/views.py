@@ -7,24 +7,30 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
+from rest_framework import permissions
+from api.permissions import IsAdminOrReadOnly
 # Create your views here.
 
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminOrReadOnly]
     
     
 class BookViewSet(ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAdminOrReadOnly]
     
 class AuthorViewSet(ModelViewSet) :
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [IsAdminOrReadOnly]
     
 class BorrowRecordViewSet(ModelViewSet):
     queryset = BorrowRecord.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
     
     def get_serializer_class(self):
         if self.request.method in ['POST', 'PUT', 'PATCH']:
@@ -67,4 +73,5 @@ class BorrowRecordViewSet(ModelViewSet):
 class MemberViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = MemberSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
