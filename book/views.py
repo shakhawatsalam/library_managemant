@@ -13,22 +13,47 @@ from api.permissions import IsAdminOrReadOnly
 
 
 class CategoryViewSet(ModelViewSet):
+    '''
+    API For Managing Category in the Library Management System
+     - Managing Categories for Book's 
+     - Only Admin Can Create, Update, and Delete
+     - Normal User / Member's can Read 
+    
+    '''
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly]
     
     
 class BookViewSet(ModelViewSet):
+    '''
+    API For Managing Book's in the Library Management System
+     - Managing Book's
+     - Only Admin Can Create, Update, and Delete Books.
+     - Normal User / Member's can Read, 
+     - Authenticated user can borrow book's and after reading they can Return also.
+    
+    '''
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAdminOrReadOnly]
     
 class AuthorViewSet(ModelViewSet) :
+    '''
+    API For Managing Book's Author in the Library Management System
+     - Managing Book's Author
+     - Only Admin Can Create, Update, and Delete Author. 
+    '''
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     permission_classes = [IsAdminOrReadOnly]
     
 class BorrowRecordViewSet(ModelViewSet):
+    '''
+    API For Book's Borrow and Return in the Library Management System
+     - Member Can Borrow Book's 
+     - After Reading Member Can Return the Book's
+    '''
     queryset = BorrowRecord.objects.all()
     permission_classes = [permissions.IsAuthenticated]
     
@@ -71,7 +96,12 @@ class BorrowRecordViewSet(ModelViewSet):
 
 
 class MemberViewSet(ModelViewSet):
+    '''
+    API For Managing All The User in the Library Management System
+     - Only Admin can visit this Route or View Set
+     - Only Admin can Delete and Update Member's or user.
+    '''
     queryset = User.objects.all()
     serializer_class = MemberSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [permissions.IsAdminUser]
 
